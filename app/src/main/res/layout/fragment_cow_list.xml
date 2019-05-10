@@ -6,7 +6,7 @@
     tools:context=".model.CowList">
 
    <ListView
-       android:id="@+id/list1"
+       android:id="@+id/list2"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
