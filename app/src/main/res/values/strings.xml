@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">JamesProject</string>
-    <string name="action_settings">Settings</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">CowLog2</string>
+    <string name="action_settings">Send</string>
     <string name="saveCowLog">Save Log Entry</string>
     <string name="send">Send</string>
     <string name="save">Save</string>
     <string name="profile">Profile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

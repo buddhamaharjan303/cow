@@ -69,6 +69,8 @@ public class CowFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Calendar calendar   = Calendar.getInstance();
+                double latitude     = 0;
+                double longitude    = 0;
                 int year            = calendar.get(Calendar.YEAR);
                 int month           = calendar.get(Calendar.MONTH) + 1;
                 int days            = calendar.get(Calendar.DAY_OF_MONTH);
@@ -88,7 +90,10 @@ public class CowFragment extends Fragment {
                         minutes,
                         seconds);
                 LogUtils.info("Time entry "+timeEntry);
-
+                if (gps.canGetLocation()){
+                    latitude = gps.getLatitude();
+                    longitude = gps.getLatitude();
+                }
                 if (StringUtils.isBlank(id)){
                     Toast.makeText(getActivity(),"Id is required. Please place id and try again",Toast.LENGTH_LONG).show();
                     return;
@@ -105,7 +110,7 @@ public class CowFragment extends Fragment {
                     Toast.makeText(getActivity(),"Condition is required. Please place id and try again",Toast.LENGTH_LONG).show();
                     return;
                 }
-                CowLog cowLog = new CowLog(id,timeEntry,weight,age,condition,cowName.getText().toString());
+                CowLog cowLog = new CowLog(id,timeEntry,weight,age,condition,cowName.getText().toString(),String.valueOf(latitude),String.valueOf(longitude));
                 MainActivity.cowLogs.add(cowLog);
 
                 idEditTxt.setText("");
@@ -143,7 +148,6 @@ public class CowFragment extends Fragment {
     public void onStart() {
         super.onStart();
         this.gps            = new TrackGPS(getContext());
-        boolean isTracked   = this.gps.canGetLocation();
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.example.assignment2;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -8,9 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.assignment2.db.DBAdapter;
 import com.example.assignment2.model.CowLog;
+import com.example.assignment2.model.User;
 import com.example.assignment2.util.LogUtils;
 
 import java.io.File;
@@ -26,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> cow;
     private int currentPage;
 
-    private DBAdapter dbAdapter;
+    public static DBAdapter dbAdapter;
 
     static String[] pageNames = {
             "ANGUS",
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public static List<CowLog> cowLogs;
+    public static User user;
 
     public MainActivity() {
         this.cowLogs        = new ArrayList<>();
@@ -57,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         cow.add("condition");
 
         // copy database
-        dbAdapter = new DBAdapter(this);
+        MainActivity.dbAdapter = new DBAdapter(this);
         try {
             String destinationPath  = "/data/data/"+getPackageName()+"/databases";
             File file               = new File(destinationPath);
@@ -75,7 +80,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        MainActivity.cowLogs = dbAdapter.getAllEntries();
+        MainActivity.cowLogs = MainActivity.dbAdapter.getAllEntries();
+        MainActivity.user    = MainActivity.dbAdapter.getUser();
     }
 
 
@@ -98,9 +104,15 @@ public class MainActivity extends AppCompatActivity {
         switch (id){
             case R.id.send:
                 new AlertDialog.Builder(this)
-                        .setTitle("Send")
-                        .setMessage("message")
-                        .setPositiveButton(android.R.string.ok, null)
+                        .setTitle("Are you sure? This will delete all the entries.")
+                        .setMessage("Save entries first?")
+                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                            if (!MainActivity.cowLogs.isEmpty()){
+                                sendEmail();
+                                MainActivity.dbAdapter.deleteAllEntries();
+                                MainActivity.cowLogs.clear();
+                            }
+                        })
                         .setNegativeButton(android.R.string.no,null)
                         .create()
                         .show();
@@ -109,17 +121,38 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.save:
                 for (CowLog cowLog: MainActivity.cowLogs) {
-                    long numberOfRow = dbAdapter.insertEntry(cowLog);
+                    long numberOfRow = MainActivity.dbAdapter.insertEntry(cowLog);
                     if (numberOfRow == 0){
                         break;
                     }
                 }
                 break;
             case R.id.profile:
+                this.profileFragment();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void sendEmail() {
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        StringBuilder body = new StringBuilder();
+        body.append(MainActivity.user.getUsername()).append("\n");
+        for (CowLog cowLog : MainActivity.cowLogs){
+            body.append(cowLog.toEmailString()).append("\n");
+        }
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"ronbalsys@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "New Logger data");
+        i.putExtra(Intent.EXTRA_TEXT   , body.toString());
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void onClick(View view) {
         this.currentPage = Integer.valueOf((String) view.getTag());
         showCurrentPage();
@@ -181,6 +214,11 @@ public class MainActivity extends AppCompatActivity {
         fileOutputStream.close();
     }
 
+    private void profileFragment(){
+        ProfileFragment frag = new ProfileFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.cowPlace, frag).commit();
+    }
 }
 
 
