@@ -1,4 +1,4 @@
-package com.example.jamesproject;
+package com.example.assignment2;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,23 +15,26 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.jamesproject.model.CowLog;
-import com.example.jamesproject.util.LogUtils;
+import com.example.assignment2.model.CowLog;
+import com.example.assignment2.model.TrackGPS;
+import com.example.assignment2.util.LogUtils;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 
 
 public class CowFragment extends Fragment {
+    private TrackGPS gps;
     private TextView cowName;
     private EditText idEditTxt,weightEditTxt,ageEditTxt;
     private Button saveBtn, showBtn;
     private Spinner conditionSpinner;
     private int selectedCowNameId;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +139,19 @@ public class CowFragment extends Fragment {
         this.conditionSpinner.setAdapter(spinnerAdapten);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        this.gps            = new TrackGPS(getContext());
+        boolean isTracked   = this.gps.canGetLocation();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.gps.stopUsingGPS();
+    }
+
     public void showLogListFragment(ArrayList<String> list) {
         CowListFragment cowListFragment = new CowListFragment();
         Bundle args = new Bundle();
@@ -145,4 +161,6 @@ public class CowFragment extends Fragment {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.cowPlace, cowListFragment).commit();
     }
+
+
 }

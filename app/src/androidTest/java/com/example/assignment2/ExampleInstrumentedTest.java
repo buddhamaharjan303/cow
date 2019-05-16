@@ -1,4 +1,4 @@
-package com.example.jamesproject;
+package com.example.assignment2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

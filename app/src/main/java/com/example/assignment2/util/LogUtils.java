@@ -1,4 +1,4 @@
-package com.example.jamesproject.util;
+package com.example.assignment2.util;
 
 import android.util.Log;
 

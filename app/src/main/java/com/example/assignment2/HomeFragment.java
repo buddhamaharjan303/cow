@@ -1,4 +1,4 @@
-package com.example.jamesproject;
+package com.example.assignment2;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

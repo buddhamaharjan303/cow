@@ -1,22 +1,16 @@
-package com.example.jamesproject;
+package com.example.assignment2;
 
-import android.content.res.AssetManager;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
-import com.example.jamesproject.db.DBAdapter;
-import com.example.jamesproject.model.CowLog;
-import com.example.jamesproject.util.LogUtils;
+import com.example.assignment2.db.DBAdapter;
+import com.example.assignment2.model.CowLog;
+import com.example.assignment2.util.LogUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,12 +20,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> cow;
-    public static List<CowLog> cowLogs;
-    private Button angus, hereford, shorthorn;
     private int currentPage;
 
     private DBAdapter dbAdapter;
@@ -43,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
             "SHORTHORN",
             "BRANGUS"
     };
+
+    public static List<CowLog> cowLogs;
 
     public MainActivity() {
         this.cowLogs        = new ArrayList<>();
@@ -61,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         cow.add("weight");
         cow.add("age");
         cow.add("condition");
+
         // copy database
         dbAdapter = new DBAdapter(this);
         try {
@@ -79,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         }catch (IOException e){
             e.printStackTrace();
         }
+
         MainActivity.cowLogs = dbAdapter.getAllEntries();
     }
 

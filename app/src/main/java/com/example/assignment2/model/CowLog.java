@@ -1,4 +1,4 @@
-package com.example.jamesproject.model;
+package com.example.assignment2.model;
 
 import java.util.Locale;
 

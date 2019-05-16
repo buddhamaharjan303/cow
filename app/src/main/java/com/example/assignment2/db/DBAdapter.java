@@ -1,4 +1,4 @@
-package com.example.jamesproject.db;
+package com.example.assignment2.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.jamesproject.model.CowLog;
+import com.example.assignment2.model.CowLog;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.jamesproject.db;
+package com.example.assignment2.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
