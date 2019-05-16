@@ -140,6 +140,7 @@ public class CowFragment extends Fragment {
         CowListFragment cowListFragment = new CowListFragment();
         Bundle args = new Bundle();
         args.putStringArrayList("list", list);
+        args.putInt("cow",this.selectedCowNameId);
         cowListFragment.setArguments(args);
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.cowPlace, cowListFragment).commit();

@@ -1,6 +1,7 @@
 package com.example.jamesproject;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -48,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         this.currentPage = Integer.valueOf((String) view.getTag());
         showCurrentPage();
     }
+    public void addReturn(View view) {
+        this.cowFragment();
+    }
 
     private void showCurrentPage() {
         switch (this.currentPage) {
@@ -88,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.cowPlace, frag).commit();
     }
+
+
 
 }
 
