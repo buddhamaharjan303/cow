@@ -1,14 +1,26 @@
 package com.example.jamesproject;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.jamesproject.db.DBAdapter;
 import com.example.jamesproject.model.CowLog;
+import com.example.jamesproject.util.LogUtils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +49,57 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         this.homeFragment();
         cow = new ArrayList<>();
         cow.add("ID");
         cow.add("weight");
         cow.add("age");
         cow.add("condition");
+        // copy database
+        DBAdapter dbAdapter = new DBAdapter(this);
+        try {
+            String destinationPath  = "/data/data/"+getPackageName()+"/databases";
+            File file               = new File(destinationPath);
+            if (!file.exists()){ //create dir and copy db
+                file.mkdirs();
+                file.createNewFile();
+                copyDB(getBaseContext().getAssets().open("/logs.db"),
+                        new FileOutputStream(destinationPath+"/logs.db"));
+            }else{
+                LogUtils.info("db file not found");
+            }
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.send) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     public void onClick(View view) {
         this.currentPage = Integer.valueOf((String) view.getTag());
         showCurrentPage();
@@ -93,7 +148,18 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.cowPlace, frag).commit();
     }
 
+    private void copyDB(InputStream inputStream, FileOutputStream fileOutputStream) throws IOException {
+        //copu 1k byte at a time
+        byte[] buffer = new byte[1024];
+        int length;
 
+        while ((length = inputStream.read(buffer)) >0){
+            fileOutputStream.write(buffer,0,length);
+        }
+        inputStream.close();
+        fileOutputStream.flush();
+        fileOutputStream.close();
+    }
 
 }
 

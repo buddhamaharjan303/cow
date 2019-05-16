@@ -3,6 +3,8 @@ package com.example.jamesproject.model;
 import java.util.Locale;
 
 public class CowLog {
+
+
     private Integer id;
     private String timeEntry;
     private Float weight;
