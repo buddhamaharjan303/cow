@@ -153,6 +153,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void onHome(View view){
+        this.currentPage = 5;
+        showCurrentPage();
+    }
+
     public void onClick(View view) {
         this.currentPage = Integer.valueOf((String) view.getTag());
         showCurrentPage();
@@ -166,9 +171,6 @@ public class MainActivity extends AppCompatActivity {
             case 0:
                 this.cowFragment();
                 break;
-            case 5:
-                this.homeFragment();
-                break;
             case 1:
                 this.cowFragment();
                 break;
@@ -180,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 4:
                 this.cowFragment();
+                break;
+            case 5:
+                this.homeFragment();
                 break;
         }
 

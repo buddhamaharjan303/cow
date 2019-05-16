@@ -84,7 +84,7 @@ public class DBAdapter {
     public User getUser(){
         User user = null;
         this.open();
-        Cursor cursor = this.mDb.rawQuery("SELECT * from user LIMIT 1",null);
+        Cursor cursor = this.mDb.rawQuery("SELECT * from users LIMIT 1",null);
         if (cursor.moveToFirst()){
             String username = cursor.getColumnName(1);
             String password = cursor.getColumnName(2);

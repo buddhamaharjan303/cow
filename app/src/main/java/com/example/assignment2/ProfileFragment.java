@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +18,21 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ProfileFragment extends Fragment {
     private EditText userName,password,repeatPassword;
-    private Button profile;
+    private Button profile,cancel;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        return view;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view       = inflater.inflate(R.layout.fragment_profile, container, false);
-        userName        = getActivity().findViewById(R.id.username);
-        password        = getActivity().findViewById(R.id.password);
-        repeatPassword  = getActivity().findViewById(R.id.repeatPassword);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        userName        = getActivity().findViewById(R.id.userNameEditText);
+        password        = getActivity().findViewById(R.id.passwordEditText);
+        repeatPassword  = getActivity().findViewById(R.id.repeatPasswordEditText);
+        profile         = getActivity().findViewById(R.id.BtnProfileSave);
+
         profile.setOnClickListener(v -> {
             String username = userName.getText().toString();
             String pass     = password.getText().toString();
@@ -54,15 +57,17 @@ public class ProfileFragment extends Fragment {
             long value = MainActivity.dbAdapter.insertUser(MainActivity.user);
             if (value > 0){
                 Toast.makeText(getActivity(),"Profile Updated.",Toast.LENGTH_LONG).show();
+                HomeFragment frag = new HomeFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction().replace(R.id.cowPlace, frag);
+                transaction.commit();
             }
-
         });
         if (MainActivity.user !=null){
             userName.setText(MainActivity.user.getUsername());
             password.setText(MainActivity.user.getPassword());
             repeatPassword.setText(MainActivity.user.getPassword());
         }
-        return view;
     }
+
 
 }

@@ -22,7 +22,7 @@
 
         <EditText
 
-            android:id="@+id/editText"
+            android:id="@+id/userNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="YOUR NAME ?"
@@ -40,11 +40,10 @@
 
         <EditText
 
-            android:id="@+id/editText1"
+            android:id="@+id/passwordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password ?"
-            android:inputType="textPassword"
             android:singleLine="true"/>
 
         <TextView
@@ -56,11 +55,10 @@
 
         <EditText
 
-            android:id="@+id/editText2"
+            android:id="@+id/repeatPasswordEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint=" Repeat Password Here"
-            android:inputType="textPassword"
             android:singleLine="true"/>
 
         <LinearLayout
@@ -83,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:text="Cancel Profile"
+                android:onClick="onClick"
                 android:textSize="20dp" />
         </LinearLayout>
     </LinearLayout>
