@@ -78,4 +78,6 @@ public class CowLog {
                 this.age,
                 this.condition);
     }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.jamesproject;
 
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private Button angus, hereford, shorthorn;
     private int currentPage;
 
+    private DBAdapter dbAdapter;
+
     static String[] pageNames = {
             "ANGUS",
             "HEREFORD",
@@ -59,24 +62,23 @@ public class MainActivity extends AppCompatActivity {
         cow.add("age");
         cow.add("condition");
         // copy database
-        DBAdapter dbAdapter = new DBAdapter(this);
+        dbAdapter = new DBAdapter(this);
         try {
             String destinationPath  = "/data/data/"+getPackageName()+"/databases";
             File file               = new File(destinationPath);
             if (!file.exists()){ //create dir and copy db
                 file.mkdirs();
                 file.createNewFile();
-                copyDB(getBaseContext().getAssets().open("/logs.db"),
+                copyDB(getBaseContext().getAssets().open("logs.db"),
                         new FileOutputStream(destinationPath+"/logs.db"));
             }else{
-                LogUtils.info("db file not found");
+                LogUtils.info("Already have database");
             }
         }catch (FileNotFoundException e){
             e.printStackTrace();
         }catch (IOException e){
             e.printStackTrace();
         }
-        dbAdapter.open();
         MainActivity.cowLogs = dbAdapter.getAllEntries();
     }
 
@@ -97,8 +99,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.send) {
-            return true;
+        switch (id){
+            case R.id.send:
+                break;
+            case R.id.save:
+                for (CowLog cowLog: MainActivity.cowLogs) {
+                    long numberOfRow = dbAdapter.insertEntry(cowLog);
+                    if (numberOfRow == 0){
+                        break;
+                    }
+                }
+                break;
+            case R.id.profile:
         }
 
         return super.onOptionsItemSelected(item);
