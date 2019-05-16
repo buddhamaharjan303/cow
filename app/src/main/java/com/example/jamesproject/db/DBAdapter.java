@@ -1,17 +1,20 @@
 package com.example.jamesproject.db;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.jamesproject.model.CowLog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBAdapter {
 
     public static final String TABLE_NAME = "cow_logs";
 
-    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TIME_ENTRY = "time_entry";
     public static final String COLUMN_WEIGHT = "weight";
     public static final String COLUMN_AGE = "age";
@@ -50,24 +53,24 @@ public class DBAdapter {
     public void close() {
         mDbHelper.close();
     }
+    public List<CowLog> getAllEntries(){
+        List<CowLog> cowLogs    = new ArrayList<>();
+        String selectQuery      = "SELECT * FROM " + TABLE_NAME;
+        Cursor cursor           = this.mDb.rawQuery(selectQuery,null);
+        if (cursor.moveToFirst()){
+            do {
+                String id           = cursor.getString(0);
+                String cow          = cursor.getString(1);
+                String weight       = cursor.getString(2);
+                String age          = cursor.getString(3);
+                String condition    = cursor.getString(4);
+                String timeEntry    = cursor.getString(5);
 
-    public static  class DBHelper extends SQLiteOpenHelper {
+                CowLog cowLog       = new CowLog(id,timeEntry,weight,age,condition,cow);
+                cowLogs.add(cowLog);
 
-        public DBHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
+            }while (cursor.moveToNext());
         }
-        public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DBAdapter.CREATE_TABLE);
-        }
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            // This database is only a cache for online data, so its upgrade policy is
-            // to simply to discard the data and start over
-            db.execSQL(DBAdapter.DROP_TABLE);
-            onCreate(db);
-        }
-        public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            onUpgrade(db, oldVersion, newVersion);
-        }
-
+        return cowLogs;
     }
 }

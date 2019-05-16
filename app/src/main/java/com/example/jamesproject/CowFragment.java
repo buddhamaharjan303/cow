@@ -102,7 +102,7 @@ public class CowFragment extends Fragment {
                     Toast.makeText(getActivity(),"Condition is required. Please place id and try again",Toast.LENGTH_LONG).show();
                     return;
                 }
-                CowLog cowLog = new CowLog(id,timeEntry,weight,age,condition,selectedCowNameId);
+                CowLog cowLog = new CowLog(id,timeEntry,weight,age,condition,cowName.getText().toString());
                 MainActivity.cowLogs.add(cowLog);
 
                 idEditTxt.setText("");
@@ -117,7 +117,7 @@ public class CowFragment extends Fragment {
             public void onClick(View v) {
                 ArrayList<String> showLogs = new ArrayList<>();
                 for (CowLog cowLog : MainActivity.cowLogs){
-                    if (cowLog.getCowId() == selectedCowNameId){
+                    if (cowLog.getCowName().equalsIgnoreCase(cowName.getText().toString())){
                         showLogs.add(cowLog.toString());
                     }
                 }

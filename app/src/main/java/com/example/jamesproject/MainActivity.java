@@ -1,5 +1,6 @@
 package com.example.jamesproject;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -75,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         }catch (IOException e){
             e.printStackTrace();
         }
+        dbAdapter.open();
+        MainActivity.cowLogs = dbAdapter.getAllEntries();
     }
 
 

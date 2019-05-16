@@ -10,15 +10,15 @@ public class CowLog {
     private Float weight;
     private Integer age;
     private String condition;
-    private int cowId;
+    private String cowName;
 
-    public CowLog(String id, String timeEntry,String weight, String age, String condition,int cowId) {
-        this.id = Integer.valueOf(id);
-        this.timeEntry = timeEntry;
-        this.weight = Float.valueOf(weight);
-        this.age = Integer.valueOf(age);
-        this.condition = condition;
-        this.cowId = cowId;
+    public CowLog(String id, String timeEntry,String weight, String age, String condition,String cowName) {
+        this.id             = Integer.valueOf(id);
+        this.timeEntry      = timeEntry;
+        this.weight         = Float.valueOf(weight);
+        this.age            = Integer.valueOf(age);
+        this.condition      = condition;
+        this.cowName        = cowName;
     }
 
     public Integer getId() {
@@ -53,12 +53,12 @@ public class CowLog {
         this.condition = condition;
     }
 
-    public int getCowId() {
-        return cowId;
+    public String getCowName() {
+        return cowName;
     }
 
-    public void setCowId(int cowId) {
-        this.cowId = cowId;
+    public void setCowName(String cowName) {
+        this.cowName = cowName;
     }
 
     public String getTimeEntry() {
