@@ -15,7 +15,7 @@
     android:orientation="horizontal"
     android:id="@+id/LI1">
     <TextView
-        android:id="@+id/tx1"
+        android:id="@+id/cowName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="32sp"
@@ -47,6 +47,7 @@
             android:gravity="center"
             android:layout_margin="5dp"
             android:padding="10dp"
+            android:id="@+id/idEditTxt"
             android:hint="XXX"
             android:textSize="32dp"/>
     </LinearLayout>
@@ -72,6 +73,7 @@
             android:hint="1-5000"
             android:gravity="center"
             android:textSize="32dp"
+            android:id="@+id/weightEditTxt"
             android:layout_margin="5dp"
             android:padding="10dp"/>
 
@@ -98,6 +100,7 @@
             android:layout_height="wrap_content"
             android:hint="1-120"
             android:gravity="center"
+            android:id="@+id/ageEditTxt"
             android:textSize="32dp"/>
     </LinearLayout>
 
@@ -119,13 +122,13 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/spiner1" />
+            android:id="@+id/conditionSpinner" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/Btn_add"
-            android:text="Save Log Entry"
+            android:id="@+id/addBtn"
+            android:text="@string/saveCowLog"
             android:textSize="18dp"/>
 
     </LinearLayout>
@@ -137,7 +140,7 @@
         android:layout_below="@+id/LI5">
 
         <Button
-            android:id="@+id/Btn_show"
+            android:id="@+id/showBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

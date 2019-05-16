@@ -1,21 +1,23 @@
 package com.example.jamesproject;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+
+import com.example.jamesproject.model.CowLog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-  ArrayList<String>cow;
-
+    ArrayList<String> cow;
+    public static List<CowLog> cowLogs;
+    private Button angus, hereford, shorthorn;
+    private int currentPage;
 
     static String[] pageNames = {
             "ANGUS",
@@ -25,18 +27,17 @@ public class MainActivity extends AppCompatActivity {
             "BRANGUS"
     };
 
-
-    private Button angus, hereford, shorthorn;
-    private int currentPage;
-
-
+    public MainActivity() {
+        this.cowLogs        = new ArrayList<>();
+        this.currentPage    = 5;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.homeFragment();
-        cow= new ArrayList <>();
+        cow = new ArrayList<>();
         cow.add("ID");
         cow.add("weight");
         cow.add("age");
