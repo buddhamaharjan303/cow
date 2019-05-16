@@ -2,6 +2,7 @@ package com.example.assignment2;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -96,6 +97,15 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         switch (id){
             case R.id.send:
+                new AlertDialog.Builder(this)
+                        .setTitle("Send")
+                        .setMessage("message")
+                        .setPositiveButton(android.R.string.ok, null)
+                        .setNegativeButton(android.R.string.no,null)
+                        .create()
+                        .show();
+
+
                 break;
             case R.id.save:
                 for (CowLog cowLog: MainActivity.cowLogs) {
