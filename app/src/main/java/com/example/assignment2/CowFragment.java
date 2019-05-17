@@ -91,8 +91,8 @@ public class CowFragment extends Fragment {
                         seconds);
                 LogUtils.info("Time entry "+timeEntry);
                 if (gps.canGetLocation()){
-                    latitude = gps.getLatitude();
-                    longitude = gps.getLatitude();
+                    latitude    = gps.getLatitude();
+                    longitude   = gps.getLongitude();
                 }
                 if (StringUtils.isBlank(id)){
                     Toast.makeText(getActivity(),"Id is required. Please place id and try again",Toast.LENGTH_LONG).show();
