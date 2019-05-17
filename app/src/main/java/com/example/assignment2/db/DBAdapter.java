@@ -98,9 +98,10 @@ public class DBAdapter {
     }
     public boolean isExists(int id){
         this.open();
-        Cursor cursor = this.mDb.rawQuery("select count(*) from "+COW_LOG_TABLE_NAME+" where _id ="+id,null);
+        Cursor cursor = this.mDb.rawQuery("select * from "+COW_LOG_TABLE_NAME+" where _id ="+id,null);
+        boolean isExists =  cursor.getCount() > 0;
         this.close();
-        return cursor.moveToFirst();
+        return isExists;
     }
 
     public long insertUser(User user) {

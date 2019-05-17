@@ -131,11 +131,12 @@ public class MainActivity extends AppCompatActivity {
                         }else{
                             count++;
                         }
-
                     }
                 }
                 if (!isFailed && count > 0){
                     Toast.makeText(this, "Entry saved in database.", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(this, "Entry are up to date.", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.profile:
