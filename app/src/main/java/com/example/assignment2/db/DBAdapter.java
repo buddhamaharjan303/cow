@@ -96,6 +96,12 @@ public class DBAdapter {
         this.close();
         return user;
     }
+    public boolean isExists(int id){
+        this.open();
+        Cursor cursor = this.mDb.rawQuery("select count(*) from "+COW_LOG_TABLE_NAME+" where _id ="+id,null);
+        this.close();
+        return cursor.moveToFirst();
+    }
 
     public long insertUser(User user) {
         this.open();
@@ -107,6 +113,8 @@ public class DBAdapter {
         this.close();
         return  value;
     }
+
+
     public long insertEntry(CowLog cowLog) {
         this.open();
         ContentValues args = this.toContentValues(cowLog);

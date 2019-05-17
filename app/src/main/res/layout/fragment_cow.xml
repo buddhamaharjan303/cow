@@ -49,6 +49,7 @@
             android:padding="10dp"
             android:id="@+id/idEditTxt"
             android:hint="XXX"
+            android:singleLine="true"
             android:textSize="32dp"/>
     </LinearLayout>
 
@@ -71,6 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="1-5000"
+            android:singleLine="true"
             android:gravity="center"
             android:textSize="32dp"
             android:id="@+id/weightEditTxt"
@@ -99,6 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="1-120"
+            android:singleLine="true"
             android:gravity="center"
             android:id="@+id/ageEditTxt"
             android:textSize="32dp"/>
@@ -164,7 +167,8 @@
             android:text="previous"
             android:textSize="20dp"
             android:layout_margin="5dp"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:onClick="onPrevious"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -174,7 +178,7 @@
             android:textSize="20dp"
             android:layout_margin="5dp"
             android:padding="5dp"
-            tools:ignore="OnClick" />
+            android:onClick="onHome" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -182,18 +186,7 @@
             android:text="next"
             android:textSize="20dp"
             android:layout_margin="5dp"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:onClick="onNext"/>
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
 </RelativeLayout>

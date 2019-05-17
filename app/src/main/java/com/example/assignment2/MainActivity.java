@@ -120,11 +120,22 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.save:
+                int count = 0;
+                boolean isFailed =false;
                 for (CowLog cowLog: MainActivity.cowLogs) {
-                    long numberOfRow = MainActivity.dbAdapter.insertEntry(cowLog);
-                    if (numberOfRow == 0){
-                        break;
+                    if (!MainActivity.dbAdapter.isExists(cowLog.getId())){
+                        long numberOfRow = MainActivity.dbAdapter.insertEntry(cowLog);
+                        if (numberOfRow == 0){
+                            isFailed = true;
+                            break;
+                        }else{
+                            count++;
+                        }
+
                     }
+                }
+                if (!isFailed && count > 0){
+                    Toast.makeText(this, "Entry saved in database.", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.profile:
@@ -159,35 +170,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        this.currentPage = Integer.valueOf((String) view.getTag());
+        if (view.getTag() == null){
+            this.currentPage = 5;
+        }else{
+            this.currentPage = Integer.valueOf((String) view.getTag());
+        }
         showCurrentPage();
     }
     public void addReturn(View view) {
         this.cowFragment();
     }
 
-    private void showCurrentPage() {
-        switch (this.currentPage) {
-            case 0:
-                this.cowFragment();
-                break;
-            case 1:
-                this.cowFragment();
-                break;
-            case 2:
-                this.cowFragment();
-                break;
-            case 3:
-                this.cowFragment();
-                break;
-            case 4:
-                this.cowFragment();
-                break;
-            case 5:
-                this.homeFragment();
-                break;
+    public void onPrevious(View view) {
+        if (this.currentPage == 0){
+            this.currentPage = 4;
+        }else{
+            this.currentPage--;
         }
+        this.cowFragment();
+    }
 
+    public void onNext(View view) {
+        if (this.currentPage == 4){
+            this.currentPage = 0;
+        }else{
+            this.currentPage++;
+        }
+        this.cowFragment();
     }
 
 
@@ -223,6 +232,30 @@ public class MainActivity extends AppCompatActivity {
         ProfileFragment frag = new ProfileFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.cowPlace, frag).commit();
+    }
+
+    private void showCurrentPage() {
+        switch (this.currentPage) {
+            case 0:
+                this.cowFragment();
+                break;
+            case 1:
+                this.cowFragment();
+                break;
+            case 2:
+                this.cowFragment();
+                break;
+            case 3:
+                this.cowFragment();
+                break;
+            case 4:
+                this.cowFragment();
+                break;
+            case 5:
+                this.homeFragment();
+                break;
+        }
+
     }
 }
 
